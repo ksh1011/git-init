@@ -31,7 +31,6 @@ export const counterSlice = createSlice({
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      console.log("11111");
       state.value += 1;
     },
     decrement: (state) => {
@@ -49,11 +48,16 @@ export const counterSlice = createSlice({
     builder
       .addCase(incrementAsync.pending, (state) => {
         console.log("1111");
-        state.status = "loading";
+        state.status = "peding";
       })
       .addCase(incrementAsync.fulfilled, (state, action) => {
         console.log("22222");
-        state.status = "idle";
+        state.status = "successed";
+        state.value += action.payload;
+      })
+      .addCase(incrementAsync.rejected, (state, action) => {
+        console.log("22222");
+        state.status = "failed";
         state.value += action.payload;
       });
   },
